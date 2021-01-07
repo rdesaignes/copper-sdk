@@ -8,6 +8,7 @@ from .opportunities import Opportunities
 from .customer_sources import CustomerSources
 from .loss_reasons import LossReasons
 from .custom_field_definitions import CustomFieldDefinitions
+from .tasks import Tasks
 
 class Copper():
     # Constructor - authentication details
@@ -81,3 +82,6 @@ class Copper():
 
     def customfielddefinitions(self):
         return CustomFieldDefinitions(self)
+
+    def tasks(self):
+        return Tasks(self)
