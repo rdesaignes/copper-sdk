@@ -24,4 +24,38 @@ class Tasks():
 
         return self.copper.post('/tasks/search', { **default_body, **body})
 
-   
+    def push_note(self, task_id, content):
+        """Push a note into a task"""
+
+        parent = {
+            "type": "task",
+            "id": task_id
+        }
+
+        # Fixed value from Copper for tasks.
+        req_type = {
+            "category": "user",
+            "id": 0
+        }
+
+        body = {
+            "parent": parent,
+            "type": req_type,
+            "details": content
+        }
+
+        return self.copper.activities().create(body)
+
+    def pull_notes(self, task_id):
+        """Request notes from a task"""
+
+        task_parent = {
+            "type": "task",
+            "id": task_id
+        }
+
+        body = {
+            "parent": task_parent
+        }
+
+        return self.copper.activities().list(body)
