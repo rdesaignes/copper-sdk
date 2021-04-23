@@ -1,3 +1,6 @@
+from copper_sdk.notes import NoteTarget
+
+
 class Tasks():
     def __init__(self, copper):
         self.copper = copper
@@ -27,35 +30,11 @@ class Tasks():
     def push_note(self, task_id, content):
         """Push a note into a task"""
 
-        parent = {
-            "type": "task",
-            "id": task_id
-        }
-
-        # Fixed value from Copper for tasks.
-        req_type = {
-            "category": "user",
-            "id": 0
-        }
-
-        body = {
-            "parent": parent,
-            "type": req_type,
-            "details": content
-        }
-
-        return self.copper.activities().create(body)
+        target = NoteTarget.Task
+        return self.copper.notes().push(target, task_id, content)
 
     def pull_notes(self, task_id):
         """Request notes from a task"""
 
-        task_parent = {
-            "type": "task",
-            "id": task_id
-        }
-
-        body = {
-            "parent": task_parent
-        }
-
-        return self.copper.activities().list(body)
+        target = NoteTarget.Task
+        return self.copper.notes().get(target, task_id)

@@ -1,3 +1,4 @@
+from copper_sdk.notes import Notes
 import requests, json
 from .users import Users
 from .leads import Leads
@@ -85,3 +86,6 @@ class Copper():
 
     def tasks(self):
         return Tasks(self)
+
+    def notes(self):
+        return Notes(self)

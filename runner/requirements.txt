@@ -1,0 +1,3 @@
+names-generator>=0.1.0
+python-dotenv>=0.17.0
+./..
