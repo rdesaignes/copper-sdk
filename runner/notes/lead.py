@@ -3,7 +3,7 @@ import names_generator
 import json
 import shared_procs
 
-def create_lead_note(copper_client, lead_id):
+def create_lead_note(copper_client, lead_id, user_id):
     """Create a note for a Lead
     
     Attributes:
@@ -21,7 +21,7 @@ def create_lead_note(copper_client, lead_id):
     target = NoteTarget.Lead
     name = names_generator.generate_name(style="capital")
     content = f"{name} greets you from Python"
-    return notes.push(target, lead_id, content)
+    return notes.push(target, lead_id, content, user_id)
 
 def get_lead_notes(copper_client, lead_id):
     """Get notes of a Lead.
@@ -44,9 +44,10 @@ def get_lead_notes(copper_client, lead_id):
 def run(copper_client, config):
     print("Running Lead Notes examples")
     lead_id = config["LEAD_ID"]
+    user_id = int(config["USER_ID"])
 
     print("Creating note for Lead Id", lead_id)
-    new_lead_note = create_lead_note(copper_client, lead_id)
+    new_lead_note = create_lead_note(copper_client, lead_id, user_id)
     print("Note:", json.dumps(new_lead_note))
 
     shared_procs.wait()

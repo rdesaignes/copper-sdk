@@ -3,7 +3,7 @@ import names_generator
 import json
 import shared_procs
 
-def create_task_note(copper_client, task_id):
+def create_task_note(copper_client, task_id, user_id):
     """Create a note for a Task
     
     Attributes:
@@ -21,7 +21,7 @@ def create_task_note(copper_client, task_id):
     target = NoteTarget.Task
     name = names_generator.generate_name(style="capital")
     content = f"{name} greets you from Python"
-    return notes.push(target, task_id, content)
+    return notes.push(target, task_id, content, user_id)
 
 def get_task_notes(copper_client, task_id):
     """Get notes of a Task.
@@ -45,9 +45,10 @@ def get_task_notes(copper_client, task_id):
 def run(copper_client, config):
     print("Running Task Notes examples")
     task_id = config["TASK_ID"]
+    user_id = int(config["USER_ID"])
 
     print("Creating note for Task Id", task_id)
-    new_task_note = create_task_note(copper_client, task_id)
+    new_task_note = create_task_note(copper_client, task_id, user_id)
     print("Note:", json.dumps(new_task_note))
 
     shared_procs.wait()

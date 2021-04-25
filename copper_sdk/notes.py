@@ -13,15 +13,15 @@ class Notes:
     def __init__(self, copper):
         self.copper = copper
 
-    def push(self, target: NoteTarget, target_id, content):
-        """Send notes to a task"""
+    def push(self, target: NoteTarget, target_id, content, user_id = 0):
+        """Send notes into an NoteTarget entity"""
 
         parent = {
             "type": target.to_str(),
             "id": target_id
         }
 
-        # Fixed value from Copper for tasks.
+        # Fixed value from Copper for notes.
         req_type = {
             "category": "user",
             "id": 0
@@ -33,18 +33,22 @@ class Notes:
             "details": content
         }
 
+        if isinstance(user_id, int):
+            if user_id > 0:
+                body["user_id"] = user_id
+
         return self.copper.activities().create(body)
 
-    def get(self, target: NoteTarget, target_id):
-        """Request notes from a task"""
+    def get(self, target: NoteTarget, target_id, user_id = 0):
+        """Request notes from an NoteTarget entity"""
 
-        task_parent = {
+        parent = {
             "type": target.to_str(),
             "id": target_id
         }
 
         body = {
-            "parent": task_parent
+            "parent": parent
         }
 
         return self.copper.activities().list(body)
