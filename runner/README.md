@@ -14,6 +14,7 @@ EMAIL=[Your CopperCRM email]
 TASK_ID=[A Task Id to perform examples]
 LEAD_ID=[A Lead Id to perform examples]
 OPPORTUNITY_ID=[An Opportunity Id to perform examples]
+USER_ID=[The User Id]
 ```
 
 When executing examples, there could be a wait of 7 secs per examples, to let

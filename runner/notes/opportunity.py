@@ -3,7 +3,7 @@ import names_generator
 import json
 import shared_procs
 
-def create_opportunity_note(copper_client, opportunity_id):
+def create_opportunity_note(copper_client, opportunity_id, user_id):
     """Create a note for a Opportunity
     
     Attributes:
@@ -21,7 +21,7 @@ def create_opportunity_note(copper_client, opportunity_id):
     target = NoteTarget.Opportunity
     name = names_generator.generate_name(style="capital")
     content = f"{name} greets you from Python"
-    return notes.push(target, opportunity_id, content)
+    return notes.push(target, opportunity_id, content, user_id)
 
 def get_opportunity_notes(copper_client, opportunity_id):
     """Get notes of a Opportunity.
@@ -45,9 +45,10 @@ def get_opportunity_notes(copper_client, opportunity_id):
 def run(copper_client, config):
     print("Running Opportunity Notes examples")
     opportunity_id = config["OPPORTUNITY_ID"]
+    user_id = int(config["USER_ID"])
 
     print("Creating note for Opportunity Id", opportunity_id)
-    new_opportunity_note = create_opportunity_note(copper_client, opportunity_id)
+    new_opportunity_note = create_opportunity_note(copper_client, opportunity_id, user_id)
     print("Note:", json.dumps(new_opportunity_note))
 
     shared_procs.wait()
