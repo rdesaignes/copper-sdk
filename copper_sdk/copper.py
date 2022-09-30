@@ -10,6 +10,10 @@ from .customer_sources import CustomerSources
 from .loss_reasons import LossReasons
 from .custom_field_definitions import CustomFieldDefinitions
 from .tasks import Tasks
+from retry import retry
+RETRY_COUNT = 3  # retry 3 times
+RETRY_INTERVAL = 3 # retry with this interval seconds
+RETRY_STATUS_CODE = [502]
 
 class Copper():
     # Constructor - authentication details
@@ -29,6 +33,7 @@ class Copper():
         self.session.headers['X-PW-Application'] = 'developer_api'
         self.session.headers['X-PW-UserEmail'] = self.email
         self.session.headers['Content-Type'] = 'application/json'
+        self.retry_count = 0
 
     def get(self, endpoint):
         return self.api_call('get', endpoint)
@@ -42,6 +47,19 @@ class Copper():
     def delete(self, endpoint):
         return self.api_call('delete', endpoint)
 
+    @retry(Exception, tries =RETRY_COUNT, delay=RETRY_INTERVAL)
+    def get_response(self, method, endpoint, optsJson):
+        """
+            This function returns the api response
+        """
+        self.retry_count +=1
+        print("Trying===> ",self.retry_count, " of " ,RETRY_COUNT)
+        response = getattr(self.session, method)(self.base_url + endpoint, data=optsJson)
+        print("=======Response code===>", response.status_code)
+        if response.status_code in RETRY_STATUS_CODE and RETRY_COUNT != self.retry_count:
+            raise Exception("Error at copper api call" + endpoint)
+        return response
+
     def api_call(self, method, endpoint, opts = None):
         optsJson = None
         if opts:
@@ -50,7 +68,7 @@ class Copper():
               print(optsJson)
 
         # dynamically call method to handle status change
-        response = getattr(self.session, method)(self.base_url + endpoint, data=optsJson)
+        response = self.get_response(method, endpoint, optsJson)
 
         if self.debug:
           print(response.text)
