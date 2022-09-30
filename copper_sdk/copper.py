@@ -17,10 +17,13 @@ RETRY_STATUS_CODE = [502]
 
 class Copper():
     # Constructor - authentication details
-    def __init__(self, token, email, base_url = 'https://api.copper.com/developer_api/v1', debug = False, session = None):
+    def __init__(self, token, email, base_url = None, debug = False, session = None):
         self.token = token
         self.email = email
-        self.base_url = base_url
+        if base_url is None:
+            self.base_url = "https://api.copper.com/developer_api/v1"
+        else:
+            self.base_url = base_url
         self.debug = debug
 
         # init request
@@ -54,6 +57,7 @@ class Copper():
         """
         self.retry_count +=1
         print("Trying===> ",self.retry_count, " of " ,RETRY_COUNT)
+        print("===base url", self.base_url)
         response = getattr(self.session, method)(self.base_url + endpoint, data=optsJson)
         print("=======Response code===>", response.status_code)
         if response.status_code in RETRY_STATUS_CODE and RETRY_COUNT != self.retry_count:
