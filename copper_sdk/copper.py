@@ -72,6 +72,7 @@ class Copper():
               print(optsJson)
 
         # dynamically call method to handle status change
+        self.retry_count = 0
         response = self.get_response(method, endpoint, optsJson)
 
         if self.debug:
