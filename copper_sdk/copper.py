@@ -13,7 +13,7 @@ from .tasks import Tasks
 from retry import retry
 RETRY_COUNT = 3  # retry 3 times
 RETRY_INTERVAL = 3 # retry with this interval seconds
-RETRY_STATUS_CODE = [502]
+RETRY_STATUS_CODE = [502,504]
 
 class Copper():
     # Constructor - authentication details
