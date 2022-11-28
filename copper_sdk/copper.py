@@ -11,8 +11,8 @@ from .loss_reasons import LossReasons
 from .custom_field_definitions import CustomFieldDefinitions
 from .tasks import Tasks
 from retry import retry
-RETRY_COUNT = 3  # retry 3 times
-RETRY_INTERVAL = 3 # retry with this interval seconds
+RETRY_COUNT = 5  # retry 5 times
+RETRY_INTERVAL = 5 # retry with this interval seconds
 RETRY_STATUS_CODE = [502,504]
 
 class Copper():
