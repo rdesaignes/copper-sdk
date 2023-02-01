@@ -12,7 +12,7 @@ from .custom_field_definitions import CustomFieldDefinitions
 from .tasks import Tasks
 from retry import retry
 RETRY_COUNT = 5  # retry 5 times
-RETRY_INTERVAL = 5 # retry with this interval seconds
+RETRY_INTERVAL = 10 # retry with this interval seconds
 RETRY_STATUS_CODE = [502,504]
 
 class Copper():
