@@ -12,6 +12,7 @@ from copper_sdk.customer_sources import CustomerSources
 from copper_sdk.loss_reasons import LossReasons
 from copper_sdk.custom_field_definitions import CustomFieldDefinitions
 from copper_sdk.tags import Tags
+from copper_sdk.tasks import Tasks
 from copper_sdk.exception import TooManyRequests
 from copper_sdk.webhooks import Webhooks
 
@@ -24,7 +25,10 @@ class Copper:
     def __init__(self, token, email, base_url=BASE_URL, debug=False, session=None):
         self.token = token
         self.email = email
-        self.base_url = base_url
+        if base_url is None:
+            self.base_url = "https://api.copper.com/developer_api/v1"
+        else:
+            self.base_url = base_url
         self.debug = debug
 
         # init request
@@ -118,3 +122,11 @@ class Copper:
     @property
     def webhooks(self):
         return Webhooks(self)
+
+    @property
+    def tasks(self):
+        return Tasks(self)
+
+    @property
+    def notes(self):
+        return Notes(self)
