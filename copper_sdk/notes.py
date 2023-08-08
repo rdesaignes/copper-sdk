@@ -1,4 +1,5 @@
 from enum import Enum
+from copper_sdk.base import BaseResource
 
 class NoteTarget(Enum):
     """For which target is the note for"""
@@ -9,7 +10,8 @@ class NoteTarget(Enum):
     def to_str(self):
         return self.value
 
-class Notes:
+class Notes(BaseResource):
+    
     def __init__(self, copper):
         self.copper = copper
 

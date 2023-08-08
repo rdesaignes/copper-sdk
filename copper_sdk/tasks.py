@@ -1,7 +1,8 @@
 from copper_sdk.notes import NoteTarget
 
 
-class Tasks():
+class Tasks(BaseResource):
+    
     def __init__(self, copper):
         self.copper = copper
 
