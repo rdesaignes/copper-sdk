@@ -17,7 +17,7 @@ from copper_sdk.exception import TooManyRequests
 from copper_sdk.webhooks import Webhooks
 
 BASE_URL = 'https://api.copper.com/developer_api/v1'
-
+PAGE_SIZE=200
 
 class Copper:
 

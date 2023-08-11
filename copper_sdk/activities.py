@@ -28,8 +28,7 @@ class Activities(BaseResource):
             # 'minimum_activity_date': "", # number	The Unix timestamp of the earliest activity date.	none
             # 'maximum_activity_date': "", # number	The Unix timestamp of the latest activity date.	none
             'full_result': False, # boolean	(Optional) If set to true, search performance improves but duplicate activity logs may be returned (footnote 3).	false
-        }
-
+        }        
         return self.copper.post('/activities/search', { **default_body, **body})
 
     def update(self, id, body=None):

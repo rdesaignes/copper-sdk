@@ -32,7 +32,6 @@ class People(BaseResource):
               'type': 'company'
           }
         }
-
         return self.copper.post(f'/people/{id}/related', body)
 
     def unrelate_to_company(self, id, company_id):
@@ -42,7 +41,6 @@ class People(BaseResource):
               'type': 'company'
           }
         }
-
         return self.copper.delete(f'/people/{id}/related', json_body=body)
 
     def list(self, body=None):
@@ -57,6 +55,21 @@ class People(BaseResource):
 
         return self.copper.post('/people/search', {**default_body, **body})
 
+    def all(self, page_number=1, page_size=200):
+        keep_going = True
+        all_items = []
+        while keep_going is True :
+            body = {
+                'page_number': page_number,
+                'page_size': page_size
+            }
+            items_list = self.list(body)
+            page_number += 1
+            if len(items_list) > 0:
+                all_items += items_list
+            else: keep_going = False
+        return all_items
+    
     def activities(self, id):
         return self.copper.get(f'/people/{id}/activities')
 

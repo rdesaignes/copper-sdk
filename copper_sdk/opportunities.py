@@ -31,8 +31,22 @@ class Opportunities(BaseResource):
             'sort_by': 'name',  # string	The field on which to sort the results (see footnote 1).
             'sort_direction': 'asc',  # string	The direction in which to sort the results. Possible values are: asc or desc.
         }
-
         return self.copper.post('/opportunities/search', {**default_body, **body})
+
+    def all(self, page_number=1, page_size=200):
+        keep_going = True
+        all_items = []
+        while keep_going is True :
+            body = {
+                'page_number': page_number,
+                'page_size': page_size
+            }
+            items_list = self.list(body)
+            page_number += 1
+            if len(items_list) > 0:
+                all_items += items_list
+            else: keep_going = False
+        return all_items
 
     def customer_sources(self):
         return self.copper.get('/customer_sources')

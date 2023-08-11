@@ -1,3 +1,4 @@
+from copper_sdk.base import BaseResource
 from copper_sdk.notes import NoteTarget
 
 
@@ -25,17 +26,14 @@ class Tasks(BaseResource):
             'sort_by': 'name',  # string	The field on which to sort the results (see footnote 1).
             'sort_direction': 'asc',  # string	The direction in which to sort the results. Possible values are: asc or desc.
         }
-
         return self.copper.post('/tasks/search', { **default_body, **body})
 
     def push_note(self, task_id, content):
         """Push a note into a task"""
-
         target = NoteTarget.Task
         return self.copper.notes().push(target, task_id, content)
 
     def pull_notes(self, task_id):
         """Request notes from a task"""
-
         target = NoteTarget.Task
         return self.copper.notes().get(target, task_id)
