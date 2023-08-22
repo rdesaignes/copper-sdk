@@ -39,7 +39,9 @@ class Companies(BaseResource):
         while keep_going is True :
             body = {
                 'page_number': page_number,
-                'page_size': page_size
+                'page_size': page_size,
+                'sort_by': 'name',
+                'sort_direction': 'asc'
             }
             items_list = self.list(body)
             page_number += 1
